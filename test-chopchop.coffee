@@ -4,10 +4,19 @@ NOT_FOUND = -1
 describe 'When finding a value in a list', ->
   find = (list, number) ->
     if list.length? is 0 
-      return NOT_FOUND
+      NOT_FOUND
     else
-      return list.indexOf number
-
+      if list.length is 1
+        if list[0] is number 
+          0
+        else
+          NOT_FOUND
+      else
+        binarySearch(list, number)
+              
+  binarySearch = (list, number) ->
+    list.indexOf number or NOT_FOUND
+    
   it 'an empty list should return NOT_FOUND for any number searched for', ->
     find([]).should.equal NOT_FOUND
 
@@ -25,7 +34,17 @@ describe 'When finding a value in a list', ->
 
   it 'a list with two items in should return 1 if the number searched for is the second item', ->
     find([1, 2], 2).should.equal 1
+
+  it 'a list with three items in that does not contain the number should return NOT_FOUND', ->
+    find([1, 2, 3], 4).should.equal NOT_FOUND
  
+  it 'a list with three items in should return 1 if the number searched for is the second item', ->
+    find([1, 2, 3], 2).should.equal 1
+
+  it 'a list with seven items in should return 5 if the number looked for is in the 5th place', ->
+    find([1, 3, 5, 6, 7, 8, 12], 8).should.equal 5
+
+
 describe 'When splitting a list', ->
   split = (list) ->
     if list.length is 0 or Array.isArray list isnt true
