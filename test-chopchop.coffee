@@ -61,7 +61,7 @@ describe 'When splitting a list', ->
     returnedObject.secondList.should.have.length 1
     returnedObject.secondList[0].should.equal 2
 
-  it 'a list with three items in should return the first and second items in the first lists', ->
+  it 'a list with three items in should return the first and second items in the first list', ->
     returnedObject = split([1, 2, 3])
     returnedObject.firstList.should.be.a 'array'
     returnedObject.firstList.should.have.length 2
@@ -73,4 +73,18 @@ describe 'When splitting a list', ->
     returnedObject.secondList.should.be.a 'array'
     returnedObject.secondList.should.have.length 1
     returnedObject.secondList[0].should.equal 3
+
+  it 'a list with four items in should return the first and second items in the first list', ->
+    returnedObject = split([1, 2, 3, 4])
+    returnedObject.firstList.should.be.a 'array'
+    returnedObject.firstList.should.have.length 2
+    returnedObject.firstList[0].should.equal 1
+    returnedObject.firstList[1].should.equal 2
+    
+  it 'a list with four items in should return the third and fourth items in the second list', ->
+    returnedObject = split([1, 2, 3, 4])
+    returnedObject.secondList.should.be.a 'array'
+    returnedObject.secondList.should.have.length 2
+    returnedObject.secondList[0].should.equal 3
+    returnedObject.secondList[1].should.equal 4
 
