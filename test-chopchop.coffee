@@ -31,7 +31,11 @@ describe 'When splitting a list', ->
     if list.length is 0 or Array.isArray list isnt true
       { firstList: [], secondList: [] }
     else
-      { firstList: [list[0]], secondList: [list[1]] }
+      if list.length is 1 
+        { firstList: list, secondList: [] }
+      else
+        splitIndex = Math.round(list.length / 2)
+        { firstList: list[..splitIndex - 1], secondList: list[splitIndex..] }
 
   it 'an empty list should return two lists', ->
     returnedObject = split([])
@@ -56,4 +60,17 @@ describe 'When splitting a list', ->
     returnedObject.secondList.should.be.a 'array'
     returnedObject.secondList.should.have.length 1
     returnedObject.secondList[0].should.equal 2
+
+  it 'a list with three items in should return the first and second items in the first lists', ->
+    returnedObject = split([1, 2, 3])
+    returnedObject.firstList.should.be.a 'array'
+    returnedObject.firstList.should.have.length 2
+    returnedObject.firstList[0].should.equal 1
+    returnedObject.firstList[1].should.equal 2
+    
+  it 'a list with three items in should return the third item in the second list', ->
+    returnedObject = split([1, 2, 3])
+    returnedObject.secondList.should.be.a 'array'
+    returnedObject.secondList.should.have.length 1
+    returnedObject.secondList[0].should.equal 3
 
