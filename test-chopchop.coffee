@@ -26,3 +26,16 @@ describe 'When finding a value in a list', ->
   it 'a list with two items in should return 1 if the number searched for is the second item', ->
     find([1, 2], 2).should.equal 1
  
+describe 'When splitting a list', ->
+  it 'an empty list should return two lists', ->
+    split = (list) ->
+      { firstList: [], secondList: [] }
+    returnedObject = split([])
+    returnedObject.firstList.should.be.a 'array'
+    returnedObject.secondList.should.be.a 'array'
+  it 'an empty list should return two empty lists', ->
+    split = (list) ->
+      { firstList: [], secondList: [] }
+    returnedObject = split([])
+    returnedObject.firstList.should.have.length 0
+    returnedObject.secondList.should.have.length 0
