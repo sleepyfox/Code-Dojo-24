@@ -12,20 +12,33 @@ split = (list) ->
       { firstList: list[..splitIndex - 1], secondList: list[splitIndex..] }
 
 find = (list, number) ->
-  if (list.length? is 0) or (number < list[0]) or (number > list[list.length-1])
-    NOT_FOUND
+  if Array.isArray(list) isnt true
+    return NOT_FOUND
+  if (list.length is 0) or (number < list[0]) or (number > list[list.length-1])
+    return NOT_FOUND
   else
     if list.length is 1
       if list[0] is number 
-        0
+        return 0
       else
-        NOT_FOUND
+        return NOT_FOUND
     else
-      binarySearch(list, number)
+      return binarySearch(list, number, 0)
 
-binarySearch = (list, number) ->
-  list.indexOf number or NOT_FOUND
-  # 
+binarySearch = (list, number, offset) ->
+  #list.indexOf number or NOT_FOUND
+  if list.length is 1 # tail recursion guard clause
+    if list[0] is number
+      return offset
+    else
+      return NOT_FOUND
+  else
+    returnedObject = split(list)
+    if returnedObject.secondList[0] <= number # must be in second list
+      binarySearch(returnedObject.secondList, number, offset + Math.round(list.length/2))
+    else # must be in first list
+      binarySearch(returnedObject.firstList, number, offset)
+
 
 describe 'When finding a value in a list', ->    
   it 'an empty list should return NOT_FOUND for any number searched for', ->
