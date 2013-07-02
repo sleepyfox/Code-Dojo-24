@@ -27,15 +27,33 @@ describe 'When finding a value in a list', ->
     find([1, 2], 2).should.equal 1
  
 describe 'When splitting a list', ->
-  it 'an empty list should return two lists', ->
-    split = (list) ->
+  split = (list) ->
+    if list.length is 0 or Array.isArray list isnt true
       { firstList: [], secondList: [] }
+    else
+      { firstList: [list[0]], secondList: [list[1]] }
+
+  it 'an empty list should return two lists', ->
     returnedObject = split([])
     returnedObject.firstList.should.be.a 'array'
     returnedObject.secondList.should.be.a 'array'
+
   it 'an empty list should return two empty lists', ->
-    split = (list) ->
-      { firstList: [], secondList: [] }
     returnedObject = split([])
     returnedObject.firstList.should.have.length 0
     returnedObject.secondList.should.have.length 0
+
+  it 'a list with one item in should return the list as the firstList', ->
+    returnedObject = split([1])
+    returnedObject.firstList.should.have.length 1
+    returnedObject.firstList[0].should.equal 1
+
+  it 'a list with two items in should return the first and second items as 1 item lists', ->
+    returnedObject = split([1, 2])
+    returnedObject.firstList.should.be.a 'array'
+    returnedObject.firstList.should.have.length 1
+    returnedObject.firstList[0].should.equal 1
+    returnedObject.secondList.should.be.a 'array'
+    returnedObject.secondList.should.have.length 1
+    returnedObject.secondList[0].should.equal 2
+
