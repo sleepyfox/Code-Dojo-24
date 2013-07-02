@@ -17,3 +17,12 @@ describe 'When finding a value in a list', ->
   it 'a list with one item in should return 0 if it contains the item', ->
     find([1], 1).should.equal 0
 
+  it 'a list with two items in should return NOT_FOUND if the number searched for is not in the list', ->
+    find([1, 2], 0).should.equal NOT_FOUND
+
+  it 'a list with two items in should return 0 if the number searched for is the first item', ->
+    find([1, 2], 1).should.equal 0
+
+  it 'a list with two items in should return 1 if the number searched for is the second item', ->
+    find([1, 2], 2).should.equal 1
+ 
