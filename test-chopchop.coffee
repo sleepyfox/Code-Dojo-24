@@ -1,22 +1,33 @@
 should = require('chai').should()
 NOT_FOUND = -1
 
-describe 'When finding a value in a list', ->
-  find = (list, number) ->
-    if list.length? is 0 
-      NOT_FOUND
+split = (list) ->
+  if list.length is 0 or Array.isArray list isnt true
+    { firstList: [], secondList: [] }
+  else
+    if list.length is 1 
+      { firstList: list, secondList: [] }
     else
-      if list.length is 1
-        if list[0] is number 
-          0
-        else
-          NOT_FOUND
+      splitIndex = Math.round(list.length / 2)
+      { firstList: list[..splitIndex - 1], secondList: list[splitIndex..] }
+
+find = (list, number) ->
+  if (list.length? is 0) or (number < list[0]) or (number > list[list.length-1])
+    NOT_FOUND
+  else
+    if list.length is 1
+      if list[0] is number 
+        0
       else
-        binarySearch(list, number)
-              
-  binarySearch = (list, number) ->
-    list.indexOf number or NOT_FOUND
-    
+        NOT_FOUND
+    else
+      binarySearch(list, number)
+
+binarySearch = (list, number) ->
+  list.indexOf number or NOT_FOUND
+  # 
+
+describe 'When finding a value in a list', ->    
   it 'an empty list should return NOT_FOUND for any number searched for', ->
     find([]).should.equal NOT_FOUND
 
@@ -46,16 +57,6 @@ describe 'When finding a value in a list', ->
 
 
 describe 'When splitting a list', ->
-  split = (list) ->
-    if list.length is 0 or Array.isArray list isnt true
-      { firstList: [], secondList: [] }
-    else
-      if list.length is 1 
-        { firstList: list, secondList: [] }
-      else
-        splitIndex = Math.round(list.length / 2)
-        { firstList: list[..splitIndex - 1], secondList: list[splitIndex..] }
-
   it 'an empty list should return two lists', ->
     returnedObject = split([])
     returnedObject.firstList.should.be.a 'array'
