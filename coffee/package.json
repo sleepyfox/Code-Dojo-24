@@ -1,0 +1,13 @@
+{
+  "name": "BinaryChop",
+  "description": "Code Dojo example code using the binary chop kata",
+  "version": "1.0.0",
+  "private": true,
+  "dependencies": {
+    "chai": "1.x",
+    "mocha": "1.x",
+    "coffee-script": "1.x"
+  },
+  "author": "@sleepyfox",
+  "license": "see LICENSE file"
+}
